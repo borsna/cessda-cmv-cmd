@@ -32,10 +32,8 @@ public class CmvValidatorApplication {
 		ValidationReportV0 validationReport = validationService.validate(document, profile, ValidationGateName.BASIC);
 		boolean isValid = validationReport.getConstraintViolations().isEmpty();
 		if(isValid){
-			System.out.println("VALID");
 			System.exit(0);
 		}else{
-			System.out.println("INVALID");
 			validationReport.getConstraintViolations().forEach( cv -> System.out.println( cv.getMessage() ) );
 			System.exit(1);
 		}

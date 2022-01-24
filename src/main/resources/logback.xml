@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- CMV: Log WARN and above -->
+    <logger name="eu.cessda.cmv.core" level="WARN"/>
+</configuration>
