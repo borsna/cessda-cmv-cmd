@@ -15,14 +15,18 @@ public class CmvValidatorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CmvValidatorApplication.class, args);
-		if(args.length != 2){
-			System.out.println("arguments expected: ddi-file.xml profile.xml");
+		if(args.length == 2){
+			validateUsingFiles(args[0], args[1], ValidationGateName.BASIC);
+		}
+		else if(args.length == 3){
+			validateUsingFiles(args[0], args[1], getValidationGate(args[2]));
 		}else{
-			validateUsingFiles(args[0], args[1]);
+			System.out.println("arguments expected: /path/to/ddi-file.xml /path/to/profile.xml [validationGate]");
+			System.out.println("suported values for validationGate: BASIC, BASICPLUS, EXTENDED, STANDARD, STRICT");
 		}
 	}
 
-	private static void validateUsingFiles(String ddiFile, String profileFile)
+	private static void validateUsingFiles(String ddiFile, String profileFile, ValidationGateName validationGate)
 	{
 		CessdaMetadataValidatorFactory factory = new CessdaMetadataValidatorFactory();
 		ValidationService.V10 validationService = factory.newValidationService();
@@ -37,6 +41,18 @@ public class CmvValidatorApplication {
 			validationReport.getConstraintViolations().forEach( cv -> System.out.println( cv.getMessage() ) );
 			System.exit(1);
 		}
+	}
+
+	private static ValidationGateName getValidationGate(String value)
+	{
+		switch(value){
+			case "BASICPLUS": return ValidationGateName.BASICPLUS;
+			case "EXTENDED": return ValidationGateName.EXTENDED;
+			case "STANDARD": return ValidationGateName.STANDARD;
+			case "STRICT": return ValidationGateName.STRICT;
+		}
+
+		return ValidationGateName.BASIC;
 	}
 
 }
