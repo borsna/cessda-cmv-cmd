@@ -1,5 +1,6 @@
 # cessda-cmv-cmd
-CESSDA validator console application
+CESSDA validator console application.
+Using same validation checks as the online validator hosted by CESSDA: https://cmv.cessda.eu
 
 ## Build
 `./mvnw package`
